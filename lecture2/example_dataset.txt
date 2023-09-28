@@ -1,0 +1,6 @@
+Organism	Taxonomy	Genes and genome_Mb
+Fusarium graminearum	Hypocreales	13726_36.5
+Fusarium fujikuroi	Hypocreales	14943_43.8
+Strain67	NAN	9500_15
+Heterobasidion annosum	Russulales	13383_33.6
+Strain35	nan	14000_23
