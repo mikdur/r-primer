@@ -9,8 +9,9 @@ output: ioslides_presentation
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library('tidyverse')
+library(writexl)
+library(readxl)
 ```
-
 
 
 ## Data handling with Tidyverse
@@ -75,6 +76,15 @@ head(data, n=5)
 ```
 
 ## Let's import some data!
+The command **head** shows the first 6 line of a tibble.
+The option **n** allows you to specify a different number.
+
+```{r, eval=TRUE, echo=TRUE}
+data <- read_tsv('dogs.txt', show_col_types = FALSE)
+head(data)
+```
+
+## Let's import some data!
 The commands **nrow**, **ncol** and **dim** allow you to see the dimension of your tibble
 
 ```{r, eval=TRUE, echo=TRUE}
@@ -82,6 +92,33 @@ data <- read_tsv('dogs.txt', show_col_types = FALSE)
 ncol(data)
 nrow(data)
 dim(data)
+```
+
+
+## You can import directly from excel
+You need the package readxl, also part of tidyverse
+
+```{r, eval=TRUE, echo=TRUE}
+library(readxl)
+data <- read_excel('dogs.xlsx')
+head(data)
+```
+
+## You can import directly from tht web
+All the files of this lesson are available at:
+https://raw.githubusercontent.com/mikdur/r-primer/main/lecture2/
+
+For example, to download 'dogs.txt', I can use **read_tsv** on https://raw.githubusercontent.com/mikdur/r-primer/main/lecture2/dogs.txt
+
+
+
+## You can import directly from tht web
+For example, to download 'dogs.txt', I can use **read_tsv** on https://raw.githubusercontent.com/mikdur/r-primer/main/lecture2/dogs.txt
+
+```{r, eval=TRUE, echo=TRUE}
+library(readxl)
+data <- read_tsv('https://raw.githubusercontent.com/mikdur/r-primer/main/lecture2/dogs.txt', show_col_types = FALSE)
+head(data)
 ```
 
 ## Useful options when importing data
@@ -338,7 +375,7 @@ data %>% group_by(Breed) %>% count(Breed) %>% arrange(desc(n))
 - <p style="font-size: 36px;">**Export data** </p>
 
 ## Exporting data
-Not much to say here, just use **write_tsv** or **write_csv**
+Not much to say here, just use **write_tsv**, **write_csv** or **write_xlsx**
 ```{r, eval=FALSE, echo=TRUE}
 write_tsv(data, 'test.txt')
 ```
@@ -353,13 +390,24 @@ write_tsv(data, 'test.txt')
   </div>
 </div>
 
-## Exporting data
+## Exporting data and pasting to excel
 ```{r, eval=FALSE, echo=TRUE}
 write_tsv(data, 'test.txt')
 ```
 
 <div style="position: relative;">
   <img src="figures/test_excel.png" alt="Tidyverse summary" width="60%" height="60%" />
+  </div>
+</div>
+
+## Exporting data directly to excel
+```{r, eval=FALSE, echo=TRUE}
+library(writexl)
+write_xlsx(data, 'test.xlsx')
+```
+
+<div style="position: relative;">
+  <img src="figures/test_excel_2.png" alt="Tidyverse summary" width="60%" height="60%" />
   </div>
 </div>
 
@@ -379,7 +427,21 @@ It is expecially useful to google error messages:
 ![Tidyverse summary](figures/example_error.png){width=90% height=90%}
 ![Tidyverse summary](figures/google_error.png){width=70% height=70%}
 
+## Let's start the exercises
+Download the presentation from:
+
+https://github.com/mikdur/r-primer/blob/main/lecture2/Lesson2.html
+
+If you want the original Rmarkdown version, it is available at:
+
+https://github.com/mikdur/r-primer/blob/main/lecture2/Lesson2.Rmd
+
+
+
+
 ## Fun exercises
+Remember to add 'https://raw.githubusercontent.com/mikdur/r-primer/main/lecture2/' in front of the name of the datasets.
+
 Load the datasets, remove lines with NAs and answer the following questions:
 
 1: Which dog breeds have only 1 representative?
