@@ -2,7 +2,7 @@ Name	Breed	Weight_kg	OwnerCity
 Spruzzolo	Sausage dog	na	Edo_Turin
 Nala	Mastiff	NA	Miguel_Barcelona
 Milou	Mastiff	138	Allison_Vancouver
-Mr Fluffypants	Mastiff	110	Laura_Uppsala
+Mr Fluffypants	Mastiff	110	Julia_Uppsala
 Colonel	Rough collie	50	Meredith_Birmingham
 Aurelion	Sausage dog	10	Marcus_Stockholm
 Lassie	Rough collie	30	Svante_Uppsala
@@ -10,6 +10,6 @@ Rustibus	Golden retriever	30	Meredith_Stockholm
 Pygmalian	Dalmatian	25	Amber_London
 Irma	Lapponian herder	18	Matilda_Uppsala
 Pongo	Dalmatian	20	Cruella_NewYork
-Goofy	Golden retriever	15	Sara_Berlin
+Goofy	Golden retriever	15	Fredrik_Berlin
 Gnasher	Mastiff	95	Amber_London
 Mylady	Rough collie	40	Meredith_Birmingham

@@ -1,8 +1,8 @@
 ---
 title: "Rcourse lecture2"
 subtitle: "Data handling and dogs"
-author: "Edoardo"
-date: "2023-09-12"
+author: "Edoardo Piombo"
+date: "2023-09-13"
 output: ioslides_presentation
 ---
 
@@ -151,7 +151,7 @@ The **col_names = FALSE** option allows you to not use the first line as column 
 ```{r, eval=TRUE, echo=TRUE}
 data <- read_tsv('F_graminearum.gff', comment="#", col_names = FALSE,
                  show_col_types = FALSE)
-head(data, n=5)
+head(data, n=4)
 ```
 
 ## Steps in data handling 2
@@ -172,7 +172,7 @@ data <- read_tsv('dogs.txt', comment="#", na = c("", "NA", "na"),
 head(data, n = 2)
 data <- separate(data, OwnerCity, sep = "_", into = c("Owner", "City"),
                  convert = TRUE)
-head(data, n=2)
+head(data, n=1)
 ```
 
 ## Separate columns
@@ -238,7 +238,7 @@ head(data, n = 2)
 select(data, Name, Breed)
 ```
 
-## Every subset of the dataframe can be save to another variable
+## Every subset of the dataframe can be saved to another variable
 
 ```{r, eval=TRUE, echo=TRUE}
 head(data, n = 2)
@@ -267,21 +267,22 @@ arrange(data, Weight_kg)
 ```
 ## Using the pipe
 The pipe is a fundamental tool which allows us to link commands.
-It is indicated by this characters: **%>%**
+It is indicated by this characters: **%>%**.
+
+The Rstudio shortcut for this is Ctrl + Shift + M (Windows) or Cmd + Shift + M (Mac).
 
 ```{r, eval=TRUE, echo=TRUE}
 filter(data, Breed=='Mastiff') %>% arrange(Weight_kg) %>% head(n=2)
 ```
 
 ## Using the pipe
-The pipe is a fundamental tool which allows us to link commands.
-It is indicated by this characters: **%>%**
+The dataset name can be linked to commands through the pipe.
 
 ```{r, eval=TRUE, echo=TRUE}
-filter(data, Breed=='Mastiff') %>% arrange(Weight_kg) %>% head(n=2)
-data %>% filter(Breed=='Mastiff') %>% arrange(Weight_kg) %>% head(n=2)
+filter(data, Breed=='Mastiff') %>% arrange(Weight_kg) %>% head(n=1)
+data %>% filter(Breed=='Mastiff') %>% arrange(Weight_kg) %>% head(n=1)
 ```
-**All** the commands we saw can be linked with pipes.
+
 
 ## The pull comamnd
 The pipe is also useful to export tibble columns as normal R vectors.
@@ -296,7 +297,7 @@ The character **|** indicates OR.
 The character **&** indicates AND.
 ```{r, eval=TRUE, echo=TRUE}
 data %>% filter(Breed=='Lapponian herder' | Breed=='Dalmatian')
-data %>%  filter(Breed=='Mastiff' | Weight_kg > 100)
+data %>%  filter(Breed=='Mastiff' & Weight_kg > 100)
 ```
 
 
@@ -428,9 +429,14 @@ It is expecially useful to google error messages:
 ![Tidyverse summary](figures/google_error.png){width=70% height=70%}
 
 ## Let's start the exercises
-Download the presentation from:
+Download the presentation from Teams or from:
 
 https://github.com/mikdur/r-primer/blob/main/lecture2/Lesson2.html
+
+<div style="position: relative;">
+  <img src="figures/figure_download_lesson.png" alt="Tidyverse summary" width="100%" height="60%" />
+  </div>
+</div>
 
 If you want the original Rmarkdown version, it is available at:
 
