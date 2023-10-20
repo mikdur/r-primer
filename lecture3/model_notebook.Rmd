@@ -1,0 +1,59 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+#It is good practice to load in the libraries you might want to use at the beginning
+
+#you can also load in your data frame here.
+```
+
+## Modeling student behavior in field conditions
+
+For this exercise, the scenario is that you are a poor, bedraggled course leader taking students on an expedition to a mountainous region in northern Sweden. You have 50 students divided across 5 different classes. At the beginning of the trip, you noticed that the students all hung out in random cliques, consisting of students from different classes. You thought to yourself 'Oh, how nice...'
+
+*Then you all went into the mountains....*
+
+As the trip went on, you noticed that student behavior became worse and worse....for some reason, they became more insane as the trip went on. While student insanity during field expeditions is not unheard of, this was exceptional - to the point where you decided to measure it using an special 'insanity index' you came up with at the end of the trip.
+
+You have some additional data as well - the elevation each student was working at, the oxygen level they were exposed to, and the number of drinks they had in the evening.
+
+Since the university is now demanding an explanation for the police reports, you decided to use the data you have to answer a few questions as to why this field trip went sideways. Let's use R to answer these questions, and R notebook to generate a well organized report, in your final days of employment.
+
+1.) Was there a significant relationship between clique and insanity? Class and insanity?
+
+2.) Starting with class 'A', each class is older than the next. Is there any significant trend between class and insanity?
+
+3.) You assume that class 'E' is the most mature, and you'd like to contrast their insanity to that of the other classes. How do they contrast, and which are signficant?
+
+4.) How about elevation and oxygen? Does oxygen change as a function of elevation? At what rate?
+
+5.) Does insanity change as a function of oxygen and elevation, or an interaction between the two?
+
+6.) Being a diligent supervisor, you *counted* the number of drinks each student had per night. Did the more insane students have significantly more drinks? How can you model this? Do you need to transform the data in any way? Or can you use another method (specifically for count data, nudge-nudge?)
+
+__Hints:__
+
+* You can write in the R code you want to use after each question:
+
+```{r}
+#plot showing it was not your fault, along with statistical verification
+```
+
+* The `hist()` and `pairs()` functions are very useful for getting quick graphical overviews of the entire dataset. 
+
+* It can also be useful to use the `boxplot()` function in the basic stats package in R, to look at trends across categorical variables. This also uses the `LHS ~ RHS` formula in the call (see `?boxplot` for examples)
+
+* To maniuplate factor levels and order, you can use the `factor()`, `oredered()`, and `relevel()` functions:
+
+```{r}
+#for example:
+dat$class<-factor(dat$class, levels=c('A','B','C','D','E'))
+dat$class<-ordered(dat$class)
+dat$class<-relevel(dat$class, ref = 'A')
+```
+
+* Don't forget to check your model diagnostics - any deviaiton from model assumptions and the university will fire you for negligent supervision. 
+
+
