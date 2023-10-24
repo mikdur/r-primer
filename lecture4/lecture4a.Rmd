@@ -1,0 +1,240 @@
+---
+title: "Lecture 4a"
+subtitle: "Basic plotting in R"
+output: slidy_presentation
+date: "2023-10-27"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## Basic plotting with R
+
+- Basic plotting
+- Title, labels, legend, coordinate system
+- Histogram
+- Output devices
+- ggplot2
+
+## Basic plotting
+
+Prepare some data for plotting
+
+```{r}
+my.data <- read.csv("https://raw.githubusercontent.com/mikdur/r-primer/main/lecture1/example.csv")
+my.data$mass <- my.data$len ^ 2 * 8 + rnorm( dim(my.data)[1], mean=1, sd=10)
+my.data$mature <- my.data$age > 4
+summary(my.data)
+```
+
+## Basic plotting
+
+Plot everything against everything
+
+```{r}
+plot(my.data)
+```
+
+## Simple X/Y scatter plot
+
+```{r}
+plot( my.data$age, my.data$mass )
+```
+
+## Simple X/Y scatter plot
+
+```{r}
+plot( my.data$age, my.data$mass,
+      xlab = "Age",
+      ylab = "Mass")
+```
+
+## Simple X/Y scatter plot
+
+```{r}
+plot( my.data$age, my.data$mass,
+      xlab = "Age",
+      ylab = "Mass",
+      main = "Mass developen of the Splonk")
+```
+
+## Simple X/Y scatter plot
+
+```{r}
+plot( my.data$age, my.data$mass,
+      xlab = "Age",
+      ylab = "Mass",
+      main = "Mass developen of the Splonk",
+      xlim = c(1, 10) )
+```
+
+## Simple X/Y scatter plot
+
+```{r}
+plot( my.data$age, my.data$mass,
+      xlab = "Age",
+      ylab = "Mass",
+      main = "Mass developen of the Splonk",
+      xlim = c(1, 10))
+lines(my.data$age, my.data$mass)
+```
+
+
+## Boxplot
+
+```{r}
+par(mfcol=c(1,2))
+plot(mass ~ mature, data=my.data)
+plot(mass ~ as.factor(mature), data=my.data)
+```
+
+
+## Coordinate system
+
+- Coodrinate system with origin in bottom left corner
+- Scaled to fit plotted values (unless overridden)
+
+```{r}
+x <- c(0, 0, 0, 1, 1, 1, 2, 2, 3, 2, 2, 3, 2, 2, 4, 4, 4, 5, 5)
+y <- c(0, 2, 1, 1, 2, 0, 2, 2, 2, 2, 1, 2, 1, 0, 0, 2, 0, 0, 1)
+
+plot(x, y, pch=1)
+```
+
+## Coordinate system
+
+- Coodrinate system with origin in bottom left corner
+- Scaled to fit plotted values (unless overridden)
+
+```{r}
+x <- c(0, 0, 0, 1, 1, 1, 2, 2, 3, 2, 2, 3, 2, 2, 3, 4, 4, 4, 5, 5)
+y <- c(0, 2, 1, 1, 2, 0, 0, 2, 2, 2, 1, 1, 1, 0, 0, 0, 2, 0, 0, 1)
+
+plot(x, y)
+lines(x, y)
+```
+
+## Coordinate system
+
+- Coodrinate system with origin in bottom left corner
+- Scaled to fit plotted values (unless overridden)
+
+```{r}
+x <- c(0, 0, 0, 1, 1, 1, 2, 2, 3, 2, 2, 3, 2, 2, 3, 4, 4, 4, 5, 5)
+y <- c(0, 2, 1, 1, 2, 0, 0, 2, 2, 2, 1, 1, 1, 0, 0, 0, 2, 0, 0, 1)
+
+plot(x, y)
+lines(x, y)
+text( x + 0.2, y, labels = as.character( 1:20 ) )
+legend("topright", pch=1:3, legend = c("first", "second", "third"))
+```
+
+## Plotting characters
+
+- pch argument defines the plotting character
+
+```{r}
+plot(1:10, 1:10, pch = 1:10)
+legend("bottomright", pch = 1:10, legend = as.character(1:10))
+```
+
+## Histograms
+
+```{r}
+x <- rnorm(1000)
+hist(x)
+```
+
+## Histograms
+
+```{r}
+x <- rnorm(1000)
+hist(x, breaks = 40)
+```
+
+## Histograms
+
+```{r}
+x <- rnorm(1000)
+hist(x, breaks = 40, freq=FALSE)
+x.density <- density(x)
+lines(x.density)
+```
+
+## Output devices
+
+R can create high quality vector graphics various formats
+- PDF (pdf())
+- EPS (postscript())
+- SVG (svg())
+
+To create a pdf/eps you first need to open an output device, then plot to it:
+
+```{r}
+pdf("foo.pdf", width = 4, height = 4)
+plot(1:10, 20:11)
+dev.off()
+```
+
+## ggplot2 - tidyverse plotting
+
+ggplot2 provides a different take on plotting. Rather than specifying each and 
+every detail yourself, it provides means of telling what to plot illustrate, and 
+then takes care of the details.
+
+Basically, you provide what you want to plot:
+
+- Data ((tidy) dataframe)
+- Aestethics mapping
+- How to plot (geometry)
+
+## ggplot2 - Example
+
+Let's try with our toy dataset:
+
+```{r}
+ggplot( data=my.data, 
+        aes(age, len, colour = as.factor(mature))) +
+  geom_point()
+```
+
+## Faceting
+
+```{r}
+ggplot( data=my.data, 
+        aes(age, len, colour = as.factor(mature))) +
+  geom_point() +
+  facet_wrap(~ as.factor(mature))
+```
+
+## Multiple panels
+
+```{r}
+library(patchwork)
+
+plot.1 <- ggplot( data=filter(my.data, mature == 1), 
+                  aes(age, len, colour = as.factor(mature))) +
+            geom_point()
+plot.2 <- ggplot( data=filter(my.data, mature == 0), 
+                  aes(age, len, colour = as.factor(mature))) +
+            geom_point()
+plot.3 <- ggplot( data=filter(my.data, mature == 1), 
+                  aes(age, mass, colour = as.factor(mature))) +
+            geom_point()
+plot.4 <- ggplot( data=filter(my.data, mature == 0), 
+                  aes(age, mass, colour = as.factor(mature))) +
+            geom_point()
+
+(plot.1 + plot.2) / (plot.3 + plot.4)
+
+```
+
+## Further reading
+
+- Help
+- R Graphics Cookbook https://r-graphics.org
+- Visualisation chapters in "R for Data Science" https://r4ds.had.co.nz
+
+
